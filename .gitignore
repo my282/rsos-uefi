@@ -1,0 +1,6 @@
+
+target/
+# QEMU/OVMF が実行時に生成するもの
+/esp/
+NvVars
+*.fd
