@@ -3,12 +3,13 @@
 参照: [phil-opp] = Writing an OS in Rust 2nd ed / [みかん] = ゼロからのOS自作入門
 
 ## Phase 0: 土台
-- [ ] Cargo ワークスペース作成 (`loader`, `kernel`)
-- [ ] ビルド → ESP 作成 → QEMU+OVMF 起動を 1 コマンドで行うスクリプト
-- [ ] QEMU のシリアル出力をターミナルに出す (`-serial stdio`)
+- [x] ~~Cargo ワークスペース作成 (`loader`, `kernel`)~~ 
+      →修正。`loader`と`kernel`は別々のクレートに(decisions.md参照)
+- [x] ビルド → ESP 作成 → QEMU+OVMF 起動を 1 コマンドで行うスクリプト
+- [x] QEMU のシリアル出力をターミナルに出す (`-serial stdio`)
 
 ## Phase 1: UEFI ローダ [みかん 1〜4章 / uefi-rs]
-- [ ] ローダで画面とログに出力 (uefi-tutorial の復習)
+- [x] ローダで画面とログに出力 (uefi-tutorial の復習)
 - [ ] メモリマップの取得・表示 [みかん 2.3〜2.7]
 - [ ] GOP でフレームバッファ情報取得、塗りつぶし [みかん 3.4]
 - [ ] カーネルを ESP から読み込んでジャンプ [みかん 3.3]

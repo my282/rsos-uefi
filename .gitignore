@@ -4,3 +4,7 @@ target/
 /esp/
 NvVars
 *.fd
+*.pdf
+
+# エディタ設定
+.lazy.lua

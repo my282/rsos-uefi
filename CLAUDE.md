@@ -24,6 +24,7 @@ Rust 製の x86_64 UEFI 向け自作 OS。
 - OVMF: `/usr/share/edk2/x64/OVMF_CODE.4m.fd`, `OVMF_VARS.4m.fd`（VARS は書き込まれるのでコピーして使う）
 
 ## 参考資料
+- **`docs/uefi-reference.md`**: UEFI 仕様 2.11 の要点まとめ（用語・ルール・定数。各項目に仕様書の章番号付き）。UEFI の仕様で迷ったらまずここを見る
 - Writing an OS in Rust (2nd ed): https://os.phil-opp.com/ — BIOS 前提なので VGA text mode / bootloader 0.9 部分は読み替える
 - 『ゼロからのOS自作入門』(みかん本) PDF: `~/Documents/mikanos.pdf` (749ページ) — UEFI ローダ部分 (1〜4章) の主要参考書。PDF のページ番号 = 本のページ番号 + 2。必要な章だけ `pdftotext -f N -l M` で読む
 - uefi-rs: https://docs.rs/uefi / https://github.com/rust-osdev/uefi-rs
