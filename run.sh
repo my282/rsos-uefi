@@ -12,8 +12,7 @@ rm -f "$IMG"
 mkfs.fat -C -F 32 -n RSOS "$IMG" 65536 > /dev/null
 mmd -i "$IMG" ::/EFI ::/EFI/BOOT
 mcopy -i "$IMG" "$LOADER" ::/EFI/BOOT/BOOTX64.EFI
-# TODO: カーネルを x86_64-unknown-none でビルドするようにしたらコピーする
-# mcopy -i "$IMG" kernel/target/x86_64-unknown-none/debug/kernel ::/kernel.elf
+mcopy -i "$IMG" kernel/target/x86_64-unknown-none/debug/kernel ::/kernel.elf
 
 qemu-system-x86_64 -enable-kvm -serial stdio \
   -drive if=pflash,format=raw,readonly=on,file=OVMF_CODE_4M.fd \

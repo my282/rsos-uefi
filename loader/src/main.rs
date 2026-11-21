@@ -11,6 +11,7 @@ use log::info;
 use uefi::CString16;
 use uefi::Identify;
 use uefi::allocator::Allocator;
+use uefi::boot::PAGE_SIZE;
 use uefi::boot::{MemoryType, SearchType};
 use uefi::fs::FileSystem;
 use uefi::mem::memory_map::MemoryMap;
@@ -19,6 +20,9 @@ use uefi::proto::console::gop;
 use uefi::proto::console::gop::GraphicsOutput;
 use uefi::proto::console::gop::PixelFormat;
 use uefi::proto::device_path::DevicePath;
+use xmas_elf::ElfFile;
+
+static KERNEL_BASE: usize = 0x100000;
 
 #[entry]
 fn main() -> Status {
@@ -111,12 +115,44 @@ fn main() -> Status {
         }
     }
 
-    // let op = gop::BltOp::VideoFill {
-    //     color: BltPixel::new(0xff, 0xff, 0xff),
-    //     dest: (0, 0),
-    //     dims: go.current_mode_info().resolution(),
-    // };
-    // go.blt(op).expect("'blt' failed");
+    // kernel loading
+    let kernel_path = CString16::try_from("\\kernel.elf").expect("Failed try_from for CString16");
+    let kernel_data = fs
+        .read(kernel_path.as_ref())
+        .expect("Failed to read kenrel");
+
+    // TODO: 1. read all PT_LOAD in ELF header and decide range of address
+    //          to allocate memory and copy kernel.elf
+    let elf = match ElfFile::new(&kernel_data) {
+        Ok(value) => value,
+        Err(e) => {
+            log::error!("Failed to parse kernel ELF {e}");
+            return Status::LOAD_ERROR;
+        }
+    };
+
+    // TODO: 2. allocate pages with the range decided above
+
+    // TODO: 3. copy 'file_size' bytes from 'offset' into 'virtual_addr' and add 0 padding to the
+    //          rest of a segment
+
+    // TODO: 4. call (jump to) entrypoint
+
+    // let page_count = (kernel_data.len() + PAGE_SIZE - 1) / PAGE_SIZE;
+    // boot::allocate_pages(
+    //     boot::AllocateType::Address(KERNEL_BASE as u64),
+    //     MemoryType::LOADER_DATA,
+    //     page_count,
+    // )
+    // .expect("Failed to allocate pages");
+    // unsafe {
+    //     // copy kernel data into memory
+    //     core::ptr::copy_nonoverlapping(
+    //         kernel_data.as_ptr(),
+    //         KERNEL_BASE as *mut u8,
+    //         kernel_data.len(),
+    //     );
+    // }
 
     info!("Get into loop...");
 

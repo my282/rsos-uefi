@@ -1,3 +1,5 @@
-# 終了後に中身を見る例:
+#!/bin/sh
+set -e
+
 mdir -i disk.img ::/
 mtype -i disk.img ::/mmap.txt
